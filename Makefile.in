@@ -143,7 +143,7 @@ ${objects_cxx}: ${objectdir}/%.o : %.cpp | ${objectdirs}
 #############################################################################
 # Tests
 gtestdir := $(abspath ${builddir}/third-party/googletest)
-gtestlibs := $(addprefix ${gtestdir}/googlemock/gtest/,libgtest.a libgtest_main.a)
+gtestlibs := $(addprefix ${gtestdir}/lib/,libgtest.a libgtest_main.a)
 testfolder := tests
 testsources := $(notdir $(wildcard ${srcdir}/${testfolder}/*.cpp))
 testbindir := $(abspath ${builddir}/${testfolder})
@@ -237,7 +237,7 @@ ${libcommon_build_path}:
 		cmake -DBUILD_TEST=OFF -DCMAKE_BUILD_TYPE=@CMAKE_BUILD_TYPE@ ${dependencies_cmake_flags} $(abspath ${srcdir})/third-party/libcommon
 
 ${libbacktrace}: ${libcommon}
-$(libsqlite3_bundled): ${libcommon}
+${libsqlite3_bundled}: ${libcommon}
 
 #############################################################################
 # Remove everything from the current build
