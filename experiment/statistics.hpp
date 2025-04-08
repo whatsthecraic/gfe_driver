@@ -17,6 +17,7 @@
 
 #pragma once
 #include <cctype>
+#include <cstdint>
 #include <ostream>
 #include <string>
 #include <vector>

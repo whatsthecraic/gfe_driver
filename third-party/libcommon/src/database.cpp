@@ -231,12 +231,12 @@ Database::RealField::RealField(const string& key, double value) : AbstractField{
 
 void Database::BaseRecord::add(const string& key, const string& value) {
     shared_ptr<AbstractField> ptr(new TextField(key, value));
-    m_fields.push_back(move(ptr));
+    m_fields.push_back(std::move(ptr));
 }
 
 void Database::BaseRecord::add(const string& key, int64_t value) {
     shared_ptr<AbstractField> ptr(new IntegerField(key, value));
-    m_fields.push_back(move(ptr));
+    m_fields.push_back(std::move(ptr));
 }
 
 void Database::BaseRecord::add(const std::string& key, uint64_t value){
@@ -245,7 +245,7 @@ void Database::BaseRecord::add(const std::string& key, uint64_t value){
 
 void Database::BaseRecord::add(const string& key, double value) {
     shared_ptr<AbstractField> ptr(new RealField(key, value));
-    m_fields.push_back(move(ptr));
+    m_fields.push_back(std::move(ptr));
 }
 
 void Database::BaseRecord::add(const BaseRecord& record) {

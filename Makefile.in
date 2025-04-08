@@ -33,9 +33,14 @@ ALL_CXXFLAGS := ${ALL_CPPFLAGS} ${EXTRA_CXXFLAGS} ${CXXFLAGS}
 subdirs := @subdirs_extra@
 libcommon := third-party/libcommon/obj/libcommon.a
 libbacktrace := third-party/libcommon/lib/backtrace/lib/libbacktrace.a
+libsqlite3_bundled := third-party/libcommon/lib/sqlite3/liblibsqlite3.a # built if it's not already present in the system
 archive := libgrapheval.a
 dependencies := ${archive} ${libcommon} ${libbacktrace}
 dependencies_cmake_flags := -DCMAKE_CXX_COMPILER="$(firstword ${CXX})" $(if $(filter -stdlib=libc++, ${CXX}),-DCMAKE_CXX_FLAGS="-stdlib=libc++")
+ifeq (@SQLITE3_VERSION@, )
+dependencies += ${libsqlite3_bundled}
+dependencies_cmake_flags += -DSQLITE3_SYSTEM=0
+endif
 toolsdir := ${objectdir}/tools
 
 # Linker
@@ -232,6 +237,7 @@ ${libcommon_build_path}:
 		cmake -DBUILD_TEST=OFF -DCMAKE_BUILD_TYPE=@CMAKE_BUILD_TYPE@ ${dependencies_cmake_flags} $(abspath ${srcdir})/third-party/libcommon
 
 ${libbacktrace}: ${libcommon}
+$(libsqlite3_bundled): ${libcommon}
 
 #############################################################################
 # Remove everything from the current build

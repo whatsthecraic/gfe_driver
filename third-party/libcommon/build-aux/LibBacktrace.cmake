@@ -1,21 +1,20 @@
 # Download and build libbacktrace. It creates the target `libbacktrace' to be used.
 include_guard(GLOBAL)
-include(CheckCXXSourceCompiles)
+#include(CheckCXXSourceCompiles)
 include(ExternalProject)
 
 # Dependency on cxxabi.h
 #Find_Path(CXXABI_INCLUDE_DIR cxxabi.h) # This tends to fail
-check_cxx_source_compiles("
-#include <cxxabi.h>
-int main(int argc, char* argv[]){
-    char * type; int status;
-    char * r = abi::__cxa_demangle(type, 0, 0, &status);
-    return 0;
-}\n" CXXABI)
-if(NOT CXXABI)
-    message(FATAL_ERROR "Missing mandatory dependency on cxxabi.h")
-endif()
-
+#check_cxx_source_compiles("
+##include <cxxabi.h>
+#int main(int argc, char* argv[]){
+#    char * type; int status;
+#    char * r = abi::__cxa_demangle(type, 0, 0, &status);
+#    return 0;
+#}\n" CXXABI)
+#if(NOT CXXABI)
+#    message(FATAL_ERROR "Missing mandatory dependency on cxxabi.h")
+#endif()
 
 # Download & build libbacktrace
 ExternalProject_Add(libbacktrace_external
